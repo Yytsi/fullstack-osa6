@@ -77,4 +77,15 @@ describe('unicafe reducer', () => {
     const newState = counterReducer(state, action)
     expect(newState).toEqual(initialState)
   })
+
+  test('unknown action does not change anything', () => {
+    const action = {
+      type: 'UNKNOWN'
+    }
+    const state = initialState
+
+    deepFreeze(state)
+    const newState = counterReducer(state, action)
+    expect(newState).toEqual(initialState)
+  })
 })
