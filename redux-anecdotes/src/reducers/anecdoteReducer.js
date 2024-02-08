@@ -28,6 +28,8 @@ const reducer = (state = initialState, action) => {
       ...a,
       votes: a.votes + 1
     })
+  } else if (action.type === 'NEW_ANECDOTE') {
+    return [...state, asObject(action.payload)]
   }
 
   return state
