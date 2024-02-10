@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { create, vote } from './reducers/anecdoteReducer'
+import { vote } from './reducers/anecdoteReducer'
 import AnecdoteForm from './components/AnecdoteForm'
 
 const App = () => {
