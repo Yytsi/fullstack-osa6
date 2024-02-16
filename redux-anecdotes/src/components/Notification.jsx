@@ -10,7 +10,7 @@ const Notification = () => {
   }
   return (
     <div style={style}>
-      {notification[0]}
+      {notification}
     </div>
   )
 }

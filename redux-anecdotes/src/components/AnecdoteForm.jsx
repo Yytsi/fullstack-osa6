@@ -1,25 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
-import { setNotification, clearNotification } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch()
-  const notification = useSelector(state => state.notification)
 
   const addAnecdote = async (event) => {
     event.preventDefault()
-    const timeoutID = notification[1]
-    
-    if (timeoutID !== null) {
-      console.log("clearing old notification timeout")
-      clearTimeout(timeoutID)
-    }
-    
-    dispatch(setNotification({ message: `You created ${event.target.anecdote.value}`,
-      timeoutID: setTimeout(() => {
-        dispatch(clearNotification())
-      }, 5000)  
-    }))
+    dispatch(setNotification(`You created ${event.target.anecdote.value}`, 5))
 
     dispatch(createAnecdote(event.target.anecdote.value))
     event.target.anecdote.value = ''
