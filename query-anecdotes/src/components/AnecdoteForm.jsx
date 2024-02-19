@@ -20,9 +20,18 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value
 
-    newAnecdoteMutation.mutate({ content, votes: 0 })
-
-    notificationDispatch(setNotification(`new anecdote '${content}' created`))
+    try {
+      const res = newAnecdoteMutation.mutate({ content, votes: 0 })
+      if (!res) throw Error("error creating anecdote")
+      notificationDispatch(setNotification(`new anecdote '${content}' created`))
+    } catch (error) {
+      if (content.length < 5) {
+        notificationDispatch(setNotification('too short anecdote, must have length 5 or more'))
+      } else {
+        notificationDispatch(setNotification('unknown rror creating anecdote'))
+      }
+      console.log(error)
+    }
     
     event.target.anecdote.value = ''
     console.log('new anecdote')
