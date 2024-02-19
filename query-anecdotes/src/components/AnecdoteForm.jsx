@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createAnecdote } from '../requests'
 
 const AnecdoteForm = () => {
@@ -6,8 +6,10 @@ const AnecdoteForm = () => {
 
   const newAnecdoteMutation = useMutation({ 
     mutationFn: createAnecdote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+    onSuccess: (newAnecdote) => {
+      const previousAnecdotes = queryClient.getQueryData(['anecdotes'])
+      queryClient.setQueryData(['anecdotes'], [ ...previousAnecdotes, newAnecdote ])
+      //queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
     }
   })
 
